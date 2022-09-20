@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
+import UsePrevious from './UsePrevious'
 
+/*
 function usePrevious(value) {
   const ref = useRef()
   useEffect(() => {ref.current = value})
   return ref.current
 }
+*/
 
 export default function Todo(props) {
   const { name, completed, id, toggleTaskCompleted, deleteTask, editTask } = props
@@ -12,7 +15,7 @@ export default function Todo(props) {
   const [ newName, setNewName ] = useState('')
   const editFieldRef = useRef(null)
   const editButtonRef = useRef(null)
-  const wasEditing = usePrevious(isEditing)
+  const wasEditing = UsePrevious(isEditing)
 
   const handleChange = e => setNewName(e.target.value)
 
