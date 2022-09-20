@@ -13,7 +13,6 @@ const FILTER_NAMES = Object.keys(FILTER_MAP)
 
 export default function App(props) {
   const [ tasks, setTasks ] = useState(props.tasks)
-
   const [ filter, setFilter ] = useState('All')
 
   const toggleTaskCompleted = id => {
