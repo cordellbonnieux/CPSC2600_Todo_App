@@ -5,14 +5,6 @@ import Form from './components/Form'
 import FilterButton from './components/FilterButton'
 import UsePrevious from './components/UsePrevious'
 
-/*
-function usePrevious(value) {
-  const ref = useRef()
-  useEffect(() => {ref.current = value})
-  return ref.current
-}
-*/
-
 const FILTER_MAP = {
   All: () => true,
   Active: task => !task.completed,
@@ -53,18 +45,25 @@ export default function App(props) {
   }
 
   const editTask = (id, newName) => {
-    const editedTaskList = tasks.map((task) => {
-    // if this task has the same ID as the edited task
+    const editedTaskList = tasks.map(task => {
       if (id === task.id) {
-        //
         return {...task, name: newName}
       }
-      return task;
+      return task
     })
     setTasks(editedTaskList);
   }
-  
 
+  const setImportant = id => {
+    const editedTaskList = tasks.map(task => {
+      if (task.id === id) {
+        task.isImportant = !task.isImportant
+      }
+      return task
+    })
+    setTasks(editedTaskList)
+  }
+  
   const taskList = tasks
     .filter(FILTER_MAP[filter])
     .map(task => (
@@ -76,9 +75,10 @@ export default function App(props) {
         toggleTaskCompleted={toggleTaskCompleted}
         deleteTask={deleteTask}
         editTask={editTask}
+        setImportant={setImportant}
+        isImportant={task.isImportant}
       />
   ))
-  
 
   const filterList = FILTER_NAMES.map(name => 
     <FilterButton 
@@ -94,6 +94,13 @@ export default function App(props) {
 
   const listHeadingRef = useRef(null)
   const prevTaskLength = UsePrevious(tasks.length)
+
+  useEffect(() => {
+    if (tasks.length - prevTaskLength === -1) {
+      listHeadingRef.current.focus()
+    }
+  }, [tasks.length, prevTaskLength])
+  
 
   return (
     <div className="todoapp stack-large">

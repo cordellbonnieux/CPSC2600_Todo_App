@@ -1,21 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import UsePrevious from './UsePrevious'
 
-/*
-function usePrevious(value) {
-  const ref = useRef()
-  useEffect(() => {ref.current = value})
-  return ref.current
-}
-*/
-
 export default function Todo(props) {
-  const { name, completed, id, toggleTaskCompleted, deleteTask, editTask } = props
+  const { name, completed, id, toggleTaskCompleted, deleteTask, editTask, setImportant, isImportant } = props
   const [ isEditing, setEditing ] = useState(false)
   const [ newName, setNewName ] = useState('')
   const editFieldRef = useRef(null)
   const editButtonRef = useRef(null)
   const wasEditing = UsePrevious(isEditing)
+
+  const importantStyles = {fontSize: 2 + 'rem', textDecoration: 'underline', color: 'red'}
 
   const handleChange = e => setNewName(e.target.value)
 
@@ -61,16 +55,16 @@ export default function Todo(props) {
   const viewTemplate = (
     <div className="stack-small">
       <div className="c-cb">
-          <input
-            id={id}
-            type="checkbox"
-            defaultChecked={props.completed}
-            onChange={() => props.toggleTaskCompleted(id)}
-          />
-          <label className="todo-label" htmlFor={id}>
-            {props.name}
-          </label>
-        </div>
+        <input
+          id={id}
+          type="checkbox"
+          defaultChecked={props.completed}
+          onChange={() => props.toggleTaskCompleted(id)}
+        />
+        <label className="todo-label" htmlFor={id} style={isImportant ? importantStyles : null}>
+          {props.name}
+        </label>
+      </div>
         <div className="btn-group">
           <button 
             type="button" 
@@ -83,9 +77,16 @@ export default function Todo(props) {
           <button
             type="button"
             className="btn btn__danger"
-            onClick={() => props.deleteTask(props.id)}
+            onClick={() => props.deleteTask(id)}
           >
             Delete <span className="visually-hidden">{name}</span>
+          </button>
+          <button 
+            type="button" 
+            className="btn" 
+            onClick={e => setImportant(id)}
+          >
+            Important <span className="visually-hidden">{name}</span>
           </button>
         </div>
     </div>
