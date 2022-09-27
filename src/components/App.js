@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { nanoid } from 'nanoid'
-import Todo from './components/Todo'
-import Form from './components/Form'
-import FilterButton from './components/FilterButton'
-import UsePrevious from './components/UsePrevious'
-import { getActiveElement } from '@testing-library/user-event/dist/utils'
+import Todo from './Todo'
+import Form from './Form'
+import FilterButton from './FilterButton'
+import UsePrevious from './UsePrevious'
+import ClearButton from './ClearButton'
 
 const FILTER_MAP = {
   All: () => true,
@@ -13,8 +13,8 @@ const FILTER_MAP = {
 }
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
-export default function App(props) {
-  const [ tasks, setTasks ] = useState([]/*props.tasks*/)
+export default function App() {
+  const [ tasks, setTasks ] = useState([])
   const [ filter, setFilter ] = useState('All')
 
   const toggleTaskCompleted = id => {
@@ -28,8 +28,24 @@ export default function App(props) {
   }
 
   const deleteTask =  id => {
-    const remainingTasks = tasks.filter(task => id !== task.id)
+    // using a for loop in place of filter to delete state and storage simultaneously
+    //const remainingTasks = tasks.filter(task => id !== task.id)
+    const remainingTasks = []
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].id === id) {
+        window.localStorage.removeItem(JSON.stringify(id))
+      } else {
+        remainingTasks.push(tasks[i])
+      }
+    }
     setTasks(remainingTasks)
+  }
+
+  const deleteAllTasks = () => {
+    //const ids = []
+    //tasks.forEach(task => ids.push(JSON.parse(task.id)))
+    setTasks([])
+    window.localStorage.clear()
   }
 
   const addTask = name => {
@@ -132,6 +148,7 @@ export default function App(props) {
   return (
     <div className="todoapp stack-large">
       <Form addTask={addTask} />
+      <ClearButton delete={deleteAllTasks}/>
       <div className="filters btn-group stack-exception">
         {filterList}
       </div>
@@ -139,7 +156,6 @@ export default function App(props) {
         {headingText}
       </h2>
       <ul
-        role="list"
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
       >
