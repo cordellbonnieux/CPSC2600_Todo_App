@@ -4,6 +4,7 @@ import Todo from './components/Todo'
 import Form from './components/Form'
 import FilterButton from './components/FilterButton'
 import UsePrevious from './components/UsePrevious'
+import { getActiveElement } from '@testing-library/user-event/dist/utils'
 
 const FILTER_MAP = {
   All: () => true,
@@ -13,7 +14,7 @@ const FILTER_MAP = {
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
 export default function App(props) {
-  const [ tasks, setTasks ] = useState(props.tasks)
+  const [ tasks, setTasks ] = useState([]/*props.tasks*/)
   const [ filter, setFilter ] = useState('All')
 
   const toggleTaskCompleted = id => {
@@ -100,6 +101,31 @@ export default function App(props) {
       listHeadingRef.current.focus()
     }
   }, [tasks.length, prevTaskLength])
+
+  // get the tasks
+  useEffect(() => {
+    // get items and add them to tasks
+    if (window.localStorage.length > 0) {
+      const storedTasks = [] //
+      //window.localStorage.forEach(task => storedTasks.push(JSON.parse(task))) //
+      for (let i = 0; i < window.localStorage.length; i++) {
+        // check to see if there are copies of tasks
+        console.log(window.localStorage)
+
+      }
+      setTasks(storedTasks)
+    }
+  }, [])
+
+  // set the tasks
+  useEffect(() => {
+    taskList.forEach(task => {
+      window.localStorage.setItem(
+        JSON.stringify(task.props.id),
+        JSON.stringify(task.props)
+      )
+    })
+  }, [taskList])
   
 
   return (
