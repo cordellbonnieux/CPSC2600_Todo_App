@@ -106,13 +106,15 @@ export default function App(props) {
   useEffect(() => {
     // get items and add them to tasks
     if (window.localStorage.length > 0) {
-      const storedTasks = [] //
-      //window.localStorage.forEach(task => storedTasks.push(JSON.parse(task))) //
+      const storedTasks = []
       for (let i = 0; i < window.localStorage.length; i++) {
-        // check to see if there are copies of tasks
-        console.log(window.localStorage)
-
+        storedTasks.push(
+          JSON.parse(window.localStorage.getItem(
+            window.localStorage.key(i)
+          ))
+        )
       }
+      // set the tasks
       setTasks(storedTasks)
     }
   }, [])
@@ -127,7 +129,6 @@ export default function App(props) {
     })
   }, [taskList])
   
-
   return (
     <div className="todoapp stack-large">
       <Form addTask={addTask} />
