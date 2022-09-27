@@ -6,6 +6,8 @@ import FilterButton from './FilterButton'
 import UsePrevious from './UsePrevious'
 import ClearButton from './ClearButton'
 
+import '../css/switch.css'
+
 const FILTER_MAP = {
   All: () => true,
   Active: task => !task.completed,
@@ -42,8 +44,6 @@ export default function App() {
   }
 
   const deleteAllTasks = () => {
-    //const ids = []
-    //tasks.forEach(task => ids.push(JSON.parse(task.id)))
     setTasks([])
     window.localStorage.clear()
   }
@@ -147,6 +147,13 @@ export default function App() {
   
   return (
     <div className="todoapp stack-large">
+      
+      <label className="switch">
+        <input type="checkbox"></input>
+        <span className="slider round"></span>
+      </label>
+
+
       <Form addTask={addTask} />
       <ClearButton delete={deleteAllTasks}/>
       <div className="filters btn-group stack-exception">
