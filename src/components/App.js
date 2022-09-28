@@ -5,6 +5,7 @@ import Form from './Form'
 import FilterButton from './FilterButton'
 import UsePrevious from './UsePrevious'
 import ClearButton from './ClearButton'
+import ThemeToggler from './ThemeToggler'
 
 import '../css/switch.css'
 
@@ -147,13 +148,7 @@ export default function App() {
   
   return (
     <div className="todoapp stack-large">
-      
-      <label className="switch">
-        <input type="checkbox"></input>
-        <span className="slider round"></span>
-      </label>
-
-
+      <ThemeToggler />      
       <Form addTask={addTask} />
       <ClearButton delete={deleteAllTasks}/>
       <div className="filters btn-group stack-exception">
