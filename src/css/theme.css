@@ -3,19 +3,18 @@
 }
 
 #light {
-    background: radial-gradient(circle closest-side, #000, #fff);
+    background: radial-gradient(circle farthest-side, #ccc, #fff);
     color: #000;
 }
 
 #light .filters.btn-group.stack-exception button {
-    background-color: #fff;
+    border: 1px solid #000;
 }
 
 #dark {
-    background: radial-gradient(#fff, #4d4d4d);
-    color: #fff;
+
 }
 
 #dark .filters.btn-group.stack-exception button {
-    background-color: #4d4d4d;
+
 }

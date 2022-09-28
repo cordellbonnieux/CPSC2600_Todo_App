@@ -19,6 +19,14 @@ export default function App() {
   const [ filter, setFilter ] = useState('All')
   const [ theme, setTheme ] = useState('light')
 
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark')
+    } else {
+      setTheme('light')
+    }
+  }
+
   const toggleTaskCompleted = id => {
     const updatedTasks = tasks.map( task => {
       if (id === task.id) {
@@ -147,7 +155,7 @@ export default function App() {
   
   return (
     <div className="todoapp stack-large" id={theme}>
-      <ThemeToggler />      
+      <ThemeToggler toggler={toggleTheme} />      
       <Form addTask={addTask} />
       <ClearButton delete={deleteAllTasks}/>
       <div className="filters btn-group stack-exception">
