@@ -1,0 +1,21 @@
+.todoapp.stack-large {
+    background-repeat: no-repeat;
+}
+
+#light {
+    background: radial-gradient(circle closest-side, #000, #fff);
+    color: #000;
+}
+
+#light .filters.btn-group.stack-exception button {
+    background-color: #fff;
+}
+
+#dark {
+    background: radial-gradient(#fff, #4d4d4d);
+    color: #fff;
+}
+
+#dark .filters.btn-group.stack-exception button {
+    background-color: #4d4d4d;
+}

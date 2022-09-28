@@ -7,8 +7,6 @@ import UsePrevious from './UsePrevious'
 import ClearButton from './ClearButton'
 import ThemeToggler from './ThemeToggler'
 
-import '../css/switch.css'
-
 const FILTER_MAP = {
   All: () => true,
   Active: task => !task.completed,
@@ -19,6 +17,7 @@ const FILTER_NAMES = Object.keys(FILTER_MAP)
 export default function App() {
   const [ tasks, setTasks ] = useState([])
   const [ filter, setFilter ] = useState('All')
+  const [ theme, setTheme ] = useState('light')
 
   const toggleTaskCompleted = id => {
     const updatedTasks = tasks.map( task => {
@@ -147,7 +146,7 @@ export default function App() {
   }, [taskList])
   
   return (
-    <div className="todoapp stack-large">
+    <div className="todoapp stack-large" id={theme}>
       <ThemeToggler />      
       <Form addTask={addTask} />
       <ClearButton delete={deleteAllTasks}/>
