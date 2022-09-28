@@ -35,7 +35,7 @@ h2, ul {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: grey;
+    background-color: #000;
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -47,17 +47,17 @@ h2, ul {
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: #da6a6a;
     -webkit-transition: .4s;
     transition: .4s;
   }
   
   input:checked + .slider {
-    background-color: green;
+    background-color: #fff;
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px green;
+    box-shadow: 0 0 1px #fff;
   }
   
   input:checked + .slider:before {
