@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { nanoid } from 'nanoid'
+import axios from 'axios'
 import Todo from './Todo'
 import Form from './Form'
 import FilterButton from './FilterButton'
@@ -140,6 +141,24 @@ export default function App() {
       }
       // set the tasks
       setTasks(storedTasks)
+    } else {
+      // if there are no tasks, import sample tasks
+      axios
+        .get('https://jsonplaceholder.typicode.com/todos')
+        .then(objs => {
+          const sampleStrings = []
+          for (let i = 0; i < 5; i++) {
+            sampleStrings.push(objs.data[i].title)
+          }
+          const sampleTasks = sampleStrings.map(string => {
+            return {
+              id: `todo-${nanoid()}`,
+              name: string,
+              completed: false
+            }
+          })
+          setTasks(sampleTasks)
+        })
     }
   }, [])
 
